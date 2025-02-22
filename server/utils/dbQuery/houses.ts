@@ -56,12 +56,12 @@ export const getTotalHouses = defineCachedFunction(
    async ({ search }: Input) => {
       //I have removed fall back object`= {}` from the line below to induce the  type inferece error
       //In my original project though, I want eevn getting this error that total could be undefined.
-      const [{ total = 0 }] = await queryTotalHouses.execute({ search });
+      const { total = 0 } = (await queryTotalHouses.execute({ search }))[0]!;
       return total;
    },
    {
       name: cacheName.getTotalHouses,
-      getKey: buildCacheKey,
+      // getKey: buildCacheKey,
       maxAge: 60,
    }
 );
@@ -83,7 +83,7 @@ export const getPaginatedHouses = defineCachedFunction(
    },
    {
       name: cacheName.getPaginatedHouses,
-      getKey: buildCacheKey,
+      // getKey: buildCacheKey,
       maxAge: 60,
    }
 );
